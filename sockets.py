@@ -102,7 +102,7 @@ def read_ws(ws,client):
             print ("WS RECV: %s" % msg)
             if (msg is not None):
                 packet = json.loads(msg)
-                for e in packet:
+                for e in packet.keys():
                     myWorld.set(e, packet[e])
                 send_all_json( packet )
             else:
@@ -122,6 +122,7 @@ def subscribe_socket(ws):
         while True:
             # block here
             msg = client.get()
+            print(msg)
             ws.send(msg)
     except Exception as e:# WebSocketError as e:
         print ("WS Error %s" % e)
