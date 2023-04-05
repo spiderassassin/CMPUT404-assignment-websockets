@@ -49,12 +49,15 @@ function drawCircle(context,entity) {
     with(context) {
         beginPath();                
         lineWidth = 3;
+        fillRect(100,100,100,100 )
+        lineTo(250,250);
+        lineTo(100, 250);
         var x = entity["x"];
         var y = entity["y"];
         //moveTo(x,y);
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
-        arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
+        arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, true);  
         stroke();                                
     }
 }
@@ -232,16 +235,16 @@ mouse = (function() {
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'purple', 'radius':10});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'pink', 'radius':40});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'green',
-                          'radius':10});
+    addEntityWithoutName({'x':x,'y':y,'colour':'blue',
+                          'radius':5});
 });
 
 
@@ -257,7 +260,7 @@ function wsSetup() {
         debug("WebSocket Open");
     };
     socket.onerror = function(msg) {
-        debug("WebSocket Error:" + msg.data);
+        debug("WebSocket error:" + msg.data);
     };
     socket.onmessage = function(msg) {  
         try {

@@ -94,6 +94,8 @@ def hello():
 
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
+    #taken from https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py
+
     try:
         while True:
             msg = ws.receive()
@@ -112,6 +114,7 @@ def read_ws(ws,client):
 def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
        websocket and read updates from the websocket '''
+    #taken from https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py
     client = Client()
     clients.append(client)
     g = gevent.spawn( read_ws, ws, client )    
@@ -142,7 +145,8 @@ def flask_post_json():
 @app.route("/entity/<entity>", methods=['POST','PUT'])
 def update(entity):
     '''update the entities via this interface'''
-    myWorld.set(entity, flask_post_json())
+    data = flask_post_json()
+    myWorld.set(entity, data)
     return json.dumps(myWorld.get(entity))
 
 @app.route("/world", methods=['POST','GET'])    
