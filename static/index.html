@@ -256,6 +256,7 @@ function update() {
 function wsSetup() {
     var url = "ws://"+host+"/subscribe";   
     socket = new WebSocket(url);
+    console.log(socket.readyState);
     socket.onopen = function() {
         debug("WebSocket Open");
     };
@@ -267,8 +268,8 @@ function wsSetup() {
             debug("WebSocket Recv:" + msg.data);
             //XXX: TODO What are you going to do here?  
             var message = JSON.parse(msg.data);
-            for (let d in message){
-                message[d] = message[d];
+            for (d in message){
+                world[d] = message[d];
             }   
             drawNextFrame();      
         } catch (e) {
